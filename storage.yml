@@ -1,0 +1,32 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: kc-postgres-pv
+  namespace: kube-social
+  labels:
+    type: local
+    app: postgres
+spec:
+  storageClassName: "standard"
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kc-postgres-pvc
+  namespace: kube-social
+  labels:
+    app: postgres
+spec:
+  storageClassName: "standard"
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi  
